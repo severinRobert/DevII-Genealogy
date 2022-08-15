@@ -1,0 +1,9 @@
+*.har
+geneanet/*
+familysearch/*
+secrets.yml
+venv/*
+__pycache__/*
+tests/*
+test.py
+note.md
