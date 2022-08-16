@@ -6,7 +6,7 @@ class Secrets:
         self.secrets = {"geneanet": {"cookie": "", "sourcename": ""}, "familysearch": {"cookie": ""}}
         self.read()
         
-    def read(self):
+    def read(self) -> dict:
         try:
             with(open('data/secrets.yml', 'r')) as f:
                 self.secrets = yaml.safe_load(f)
@@ -14,7 +14,9 @@ class Secrets:
         except FileNotFoundError:
             with(open('data/secrets.yml', 'w')) as f:
                 yaml.dump(self.secrets, f)
+        finally:
+            return self.secrets
 
-    def write(self):
+    def write(self) -> None:
         with(open('data/secrets.yml', 'w')) as f:
-            yaml.dump(self.secrets, f)
+            yaml.dump(self.secrets, f)      
