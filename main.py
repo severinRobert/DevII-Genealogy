@@ -48,17 +48,20 @@ def main():
             if event == 'OK':
                 pass
 
-        elif event == '-SEARCHMARRIAGEPLACE-':
+        elif event in ('-BORNPLACE-', '-DEATHPLACE-', '-MARRIAGEPLACE-'):
             place_list = geneanet.place_autocompletion(values[event])
             if place_list != []:
-                window['-COMBOMARRIAGEPLACE-'].update(value=place_list[1], values=place_list[1:])
-        elif event == '-PARTNER-':
+                window[f'-COMBO{event[1:-1]}-'].update(value=place_list[0], values=place_list[0:])
+            else:
+                window[f'-COMBO{event[1:-1]}-'].update(value=[], values=[])
+        elif event in ('-COMBOPARENT-', '-COMBOBORNPLACE-', '-COMBODEATHPLACE-', '-COMBOMARRIAGEPLACE-', '-COMBOPARTNER-'):
+            window[f'-{event[6:]}'].update(value=values[event])
+        elif event in ('-PARTNER-', '-PARENT-'):
             partner_list = geneanet.person_autocompletion(values[event])
             if partner_list != []:
-                print(partner_list)
-                window['-COMBOPARTNER-'].update(value=partner_list[0], values=partner_list[0:])
+                window[f'-COMBO{event[1:-1]}-'].update(value=partner_list[0], values=partner_list[0:])
             else:
-                window['-COMBOPARTNER-'].update(value=[], values=[])
+                window[f'-COMBO{event[1:-1]}-'].update(value=[], values=[])
         elif event == '-ADD-':
             geneanet.add_person(values)
 

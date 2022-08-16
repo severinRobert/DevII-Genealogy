@@ -47,14 +47,14 @@ class Geneanet:
         marriageplace = person['-MARRIAGEPLACE-']
         partner = person['-PARTNER-']
 
-    def location_autocompletion(self, location:str):
-        '''Return a list of locations matching the search term
+    def place_autocompletion(self, place:str):
+        '''Return a list of places matching the search term
 
             Args:
-                location (str): The search term
+                place (str): The search term
 
             Returns:
-                list: A list of locations matching the search term
+                list: A list of places matching the search term
         '''
         response = self.session.post("https://gw.geneanet.org/setup/api/index.php",
                               params={
@@ -68,10 +68,11 @@ class Geneanet:
                                   "Cookie": self.secrets.secrets["geneanet"]["cookie"]
                               },
                               data={
-                                  "data": f"%08%02%10%01%1A%01{location}%20%14"},
+                                  "data": f"%08%02%10%01%1A%01{place}%20%14"},
                               )
         print(response.content.split(b'\n'))
-        return response.content.split(b'\n')
+        place_list = response.content.split(b'\n')
+        return place_list if place_list[0] != b'' else place_list[1:]
 
     def person_autocompletion(self, person:str):
         '''Return a list of individuals matching the search term

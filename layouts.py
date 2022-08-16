@@ -14,7 +14,7 @@ date = lambda input_name, target_name: [
         sg.Input(key=f'-{target_name}DATE-', size=(10,1)), calendar(f'-{target_name}-')
     ]
 place = lambda target_name, places: [
-        sg.Text('Lieu'),sg.Input(key=f'-SEARCH{target_name}PLACE-',size=(10,1),enable_events=True),
+        sg.Text('Lieu'),sg.Input(key=f'-{target_name}PLACE-',size=(10,1),enable_events=True),
         sg.InputCombo(values=places, key=f'-COMBO{target_name}PLACE-', size=(20,1))
     ]
 inputCombo = lambda text, values, key_name, width=10: [
@@ -31,9 +31,13 @@ menu_def = [['&Paramètres', ['&Thèmes', '&Sécurité', '&Quitter le programme'
 # Define the windows layout
 add_people = [
     title('Ajouter une personne à l\'arbre'),
+    [
+        sg.Combo(['Père de', 'Mère de', 'Fils de', 'Fille de'], 'Père de', key='-TYPEPARENT-', size=(10,1)), 
+        sg.InputText(key='-PARENT-', enable_events=True), sg.Combo([], key='-COMBOPARENT-', size=(20,1), enable_events=True)
+    ],
     inputText('Prénom', 'FIRSTNAME'),
     inputText('Nom', 'LASTNAME'),
-    [*inputCombo('Sexe', ['H', 'F'], '-SEX-', 3), *inputText('Métier', 'OCCUPATION')],
+    [*inputCombo('Sexe', ['H', 'F'], '-SEX-', 3), *inputText('Profession', 'OCCUPATION')],
     *event('Date de naissance', 'Né(e)', 'BORN', []),
     *event('Date du décès', 'Mort(e)', 'DEATH', []),
     *event('Date du mariage', 'Marié(e)', 'MARRIAGE', []),
