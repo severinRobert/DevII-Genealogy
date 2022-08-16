@@ -32,7 +32,17 @@ class Geneanet:
         self.family_names = []
         
     def add_person(self, person):
-        pass
+        firstname = person['-FIRSTNAME-']
+        lastname = person['-LASTNAME-']
+        sex = person['-SEX-']
+        occupation = person['-OCCUPATION-']
+        birthdate = person['-BIRTHDATE-']
+        birthplace = person['-BIRTHPLACE-']
+        deathdate = person['-DEATHDATE-']
+        deathplace = person['-DEATHPLACE-']
+        marriagedate = person['-MARRIAGEDATE-']
+        marriageplace = person['-MARRIAGEPLACE-']
+        partner = person['-PARTNER-']
 
     # return a list of places matching the search term
     def location_autocompletion(self, location):

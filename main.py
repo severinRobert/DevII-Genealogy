@@ -39,10 +39,10 @@ def main():
                 window.close()
                 window = make_window('Généalogie', layouts.window)
 
-        elif event == '-SEARCHMARRIAGELOCATION-':
-            location_list = geneanet.location_autocompletion(values[event])
-            if location_list != []:
-                window['-COMBOMARRIAGELOCATION-'].update(value=location_list[1], values=location_list[1:])
+        elif event == '-SEARCHMARRIAGEPLACE-':
+            place_list = geneanet.place_autocompletion(values[event])
+            if place_list != []:
+                window['-COMBOMARRIAGEPLACE-'].update(value=place_list[1], values=place_list[1:])
         elif event == '-PARTNER-':
             partner_list = geneanet.person_autocompletion(values[event])
             if partner_list != []:
