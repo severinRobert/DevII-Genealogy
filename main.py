@@ -1,17 +1,28 @@
+'''This module starts and runs the program'''
+
 import PySimpleGUI as sg
-import autocompletion as ac
 from geneanet import Geneanet
 import layouts
 
 
+def make_window(title:str, layout:list, theme:str=None):
+    '''Make a window with the given title, layout and theme
 
-def make_window(title, layout, theme=None):
+        Args:
+            title (str): The title of the window
+            layout (list): The layout of the window
+            theme (str): The theme of the window
+
+        Returns:
+            sg.Window: The window
+    '''
     if theme:
         sg.theme(theme)
 
     return sg.Window(title, layout)
 
 def main():
+    '''Main function of the program'''
 
     # Create the window and show it without the plot
     window = make_window('Généalogie', layouts.window, 'DarkAmber')
@@ -19,25 +30,23 @@ def main():
 
     while True:
         event, values = window.read()
-        if event == 'Exit' or event == sg.WIN_CLOSED or event == 'Quitter le programme':
+        if event in ('Exit', sg.WIN_CLOSED, 'Quitter le programme'):
             break
         print(event, values)
         if event == 'À propos...':
             window.disappear()
-            sg.popup('À propos de ce programme', 'Version alpha',
-                     'PySimpleGUI Version', sg.version, 'Créé par Séverin Robert',  grab_anywhere=True)
+            sg.popup('À propos de ce programme', 'Version alpha', 'PySimpleGUI Version', 
+                    sg.version, 'Créé par Séverin Robert',  grab_anywhere=True)
             window.reappear()
         elif event == 'Thèmes':
-            event, values = sg.Window('Choisir un thème', [[sg.Combo(sg.theme_list(), readonly=True, k='-THEME-'), sg.OK(), sg.Cancel()]]).read(close=True)
+            event, values = sg.Window('Choisir un thème', layouts.theme).read(close=True)
             if event == 'OK':
                 window.close()
                 window = make_window('Généalogie', layouts.window, values['-THEME-'])
         elif event == 'Sécurité':
-            event, values = sg.Window('Choisir un mot de passe', [[sg.Input('', password_char='*', key='-PASSWORD-'), sg.OK(), sg.Cancel()]]).read(close=True)
+            event, values = sg.Window('Choisir un mot de passe', layouts.security).read(close=True)
             if event == 'OK':
-                geneanet.set_password(values['-PASSWORD-'])
-                window.close()
-                window = make_window('Généalogie', layouts.window)
+                pass
 
         elif event == '-SEARCHMARRIAGEPLACE-':
             place_list = geneanet.place_autocompletion(values[event])
