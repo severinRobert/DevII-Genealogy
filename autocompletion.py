@@ -39,4 +39,3 @@ def search(location):
     )
     print(r.content.split(b'\n'))
     return r.content.split(b'\n')
-search("Mousc")

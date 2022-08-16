@@ -1,8 +1,7 @@
 *.har
 geneanet/*
 familysearch/*
-data/secrets.yml
-data/base.ged
+data/*
 venv/*
 __pycache__/*
 tests/*
