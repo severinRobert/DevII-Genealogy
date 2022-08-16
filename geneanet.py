@@ -25,13 +25,16 @@ headers = {
 
 class Geneanet:
     def __init__(self):
+        self.secrets = Secrets()
         self.session = requests.Session()
         self.session.headers.update(headers)
-        self.session.cookies.update(self.secrets.secrets["geneanet"]["cookie"])
-        self.secrets = Secrets()
+        self.session.cookies['cookie'] = self.secrets.secrets["geneanet"]["cookie"]
         self.family_names = []
         
-    
+    def add_person(self, person):
+        pass
+
+    # return a list of places matching the search term
     def location_autocompletion(self, location):
         r = self.session.post("https://gw.geneanet.org/setup/api/index.php",
                 params={
@@ -49,17 +52,20 @@ class Geneanet:
         print(r.content.split(b'\n'))
         return r.content.split(b'\n')
 
+    # return a list of individuals matching the search term
     def person_autocompletion(self, person):
         if self.family_names == []:
             self.__download_gedcom()
-            child_elements = Parser().parse_file('data/base.ged', False).get_root_child_elements()
+            gedcom_parser = Parser()
+            gedcom_parser.parse_file("data/base.ged", False)
+            child_elements = gedcom_parser.get_root_child_elements()
             for element in child_elements:
                 if isinstance(element, IndividualElement):
                     (first, last) = element.get_name()
                     self.family_names.append(f'{first} {last}')
-        return [name for name in self.family_names if name.startswith(person)]
-            
-
+        return [name for name in self.family_names if name.upper().startswith(person.upper())] if person != "" else []
+    
+    # download the gedcom file from geneanet
     def __download_gedcom(self):
         r = self.session.get(
             "https://my.geneanet.org/arbre/save.php",
@@ -81,8 +87,6 @@ class Geneanet:
         file.write(r.content)
         file.close
 
-        ZipFile("ged.zip").extractall()
-
+        ZipFile("ged.zip").extractall("data")
         os.remove("ged.zip")
-        os.system('mv base.ged data/')
 

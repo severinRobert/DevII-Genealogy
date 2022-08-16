@@ -6,9 +6,11 @@ class Secrets:
         self.secrets = {"geneanet": {"cookie": "", "sourcename": ""}, "familysearch": {"cookie": ""}}
         self.path = path
         self.read()
+        self.save()
         
     # read the secrets.yml file and update the current secrets or create a new secrets.yml file if it doesn't exist
-    def read(self, file:str = f'{self.path}secrets.yml') -> dict:
+    def read(self, file:str = None) -> dict:
+        file = f'{self.path}secrets.yml' if file is None else file
         try:
             with(open(file, 'r')) as f:
                 self.secrets = yaml.safe_load(f)
@@ -20,7 +22,8 @@ class Secrets:
             return self.secrets
 
     # write the secrets.yml file with the current secrets
-    def write(self, file:str = f'{self.path}secrets.yml') -> None:
+    def write(self, file:str = None) -> None:
+        file = f'{self.path}secrets.yml' if file is None else file
         with(open(file, 'w')) as f:
             yaml.dump(self.secrets, f) 
 
