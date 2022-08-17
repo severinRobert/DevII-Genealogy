@@ -2,6 +2,7 @@
 
 import PySimpleGUI as sg
 from geneanet import Geneanet
+from familysearch import FamilySearch
 import layouts
 
 
@@ -34,6 +35,7 @@ def main():
     # Create the window and show it without the plot
     window = make_window('Généalogie', layouts.window, 'DarkAmber')
     geneanet = Geneanet()
+    familysearch = FamilySearch()
 
     while True:
         event, values = window.read()
@@ -57,10 +59,10 @@ def main():
         
         # When the user write a place, search for autocompletion
         elif event in ('-BIRTHPLACE-', '-DEATHPLACE-', '-MARRIAGEPLACE-'):
-            place_list = geneanet.place_autocompletion(values[event])
+            place_list = familysearch.place_autocompletion(values[event])
             update_combo(window[f'-COMBO{event[1:-1]}-'], place_list)
         # When an option in a COMBO is selected, update the corresponding field
-        elif event in ('-COMBOPARENT-', '-COMBOBORNPLACE-', '-COMBODEATHPLACE-', '-COMBOMARRIAGEPLACE-', '-COMBOPARTNER-'):
+        elif event in ('-COMBOPARENT-', '-COMBOBIRTHPLACE-', '-COMBODEATHPLACE-', '-COMBOMARRIAGEPLACE-', '-COMBOPARTNER-'):
             window[f'-{event[6:]}'].update(value=values[event])
         # When the user write a person, search for autocompletion in the family tree
         elif event in ('-PARTNER-', '-PARENT-'):

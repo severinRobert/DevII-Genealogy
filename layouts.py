@@ -14,8 +14,8 @@ date = lambda input_name, target_name: [
         sg.Input(key=f'-{target_name}DATE-', size=(10,1))
     ]
 place = lambda target_name, places: [
-        sg.Text('Lieu'),sg.Input(key=f'-{target_name}PLACE-',size=(10,1),enable_events=True),
-        sg.InputCombo(values=places, key=f'-COMBO{target_name}PLACE-', size=(20,1))
+        sg.Text('Lieu'),sg.Input(key=f'-{target_name}PLACE-',size=(30,1),enable_events=True),
+        sg.InputCombo(values=places, key=f'-COMBO{target_name}PLACE-', size=(30,1), enable_events=True)
     ]
 inputCombo = lambda text, values, key_name, width=10: [
     sg.Text(text), sg.InputCombo(values, key=key_name, size=(width,1))]

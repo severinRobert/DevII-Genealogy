@@ -1,6 +1,6 @@
 # DevII-Genealogy
 ## What is it ?
-This is a project for a python course. The goal is to create an app that will centralise several genealogy platform like Geneanet, FamilySearch and Heredis. 
+This is a project for a python course. The goal is to create an interface that will allow the user to add people on several genealogy platform like Geneanet, FamilySearch and Heredis on the same time. 
 
 ## Run project
 * Create a secrets.yml with this content : 
