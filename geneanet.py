@@ -33,8 +33,11 @@ class Geneanet:
         self.session.headers.update(headers)
         self.session.cookies['cookie'] = self.secrets.secrets["geneanet"]["cookie"]
         self.family_names = []
+        self.person_autocompletion("")
 
     def add_person(self, person):
+        '''Add a person to the geneanet database'''
+        parent = person['-PARENT-']
         firstname = person['-FIRSTNAME-']
         lastname = person['-LASTNAME-']
         sex = person['-SEX-']

@@ -4,14 +4,14 @@ import PySimpleGUI as sg
 
 # Standard layout for the window
 inputText = lambda text, target_name: [
-        sg.Text(text), sg.InputText(key=f'-{target_name}-', enable_events=True)
+        sg.Text(text), sg.InputText(key=f'-{target_name}-', size=(30,1), enable_events=True)
     ]
-calendar = lambda target_name: sg.CalendarButton('Choisir une date', close_when_date_chosen=True,
-                                format='%d/%m/%Y',  target=f'{target_name}', no_titlebar=False)
+#calendar = lambda target_name: sg.CalendarButton('Choisir une date', close_when_date_chosen=True,
+#                                format='%d/%m/%Y',  target=f'{target_name}', no_titlebar=False)
 title = lambda text: [sg.Text(text, size=(60, 1), justification='center')]
 date = lambda input_name, target_name: [
         sg.Text(f'{input_name}'), sg.InputCombo(['exactement','vers'], ), sg.Text('le'),
-        sg.Input(key=f'-{target_name}DATE-', size=(10,1)), calendar(f'-{target_name}-')
+        sg.Input(key=f'-{target_name}DATE-', size=(10,1))
     ]
 place = lambda target_name, places: [
         sg.Text('Lieu'),sg.Input(key=f'-{target_name}PLACE-',size=(10,1),enable_events=True),
@@ -33,17 +33,17 @@ add_people = [
     title('Ajouter une personne à l\'arbre'),
     [
         sg.Combo(['Père de', 'Mère de', 'Fils de', 'Fille de'], 'Père de', key='-TYPEPARENT-', size=(10,1)), 
-        sg.InputText(key='-PARENT-', enable_events=True), sg.Combo([], key='-COMBOPARENT-', size=(20,1), enable_events=True)
+        sg.InputText(key='-PARENT-', size=(30,1), enable_events=True), sg.Combo([], key='-COMBOPARENT-', size=(30,1), enable_events=True)
     ],
     inputText('Prénom', 'FIRSTNAME'),
     inputText('Nom', 'LASTNAME'),
     [*inputCombo('Sexe', ['H', 'F'], '-SEX-', 3), *inputText('Profession', 'OCCUPATION')],
-    *event('Date de naissance', 'Né(e)', 'BORN', []),
+    *event('Date de naissance', 'Né(e)', 'BIRTH', []),
     *event('Date du décès', 'Mort(e)', 'DEATH', []),
     *event('Date du mariage', 'Marié(e)', 'MARRIAGE', []),
     [
         *inputText('Marié(e) à', 'PARTNER'),
-        sg.Combo([], key='-COMBOPARTNER-', size=(20,1), enable_events=True)
+        sg.Combo([], key='-COMBOPARTNER-', size=(30,1), enable_events=True)
     ],
     [sg.Button('Ajouter un individu', key='-ADD-')]
 ]

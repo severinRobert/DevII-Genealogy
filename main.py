@@ -21,6 +21,13 @@ def make_window(title:str, layout:list, theme:str=None):
 
     return sg.Window(title, layout)
 
+def update_combo(combo:sg.Combo, items:list):
+    '''Update the given combo with the given items'''
+    if items != []:
+        combo.update(value=items[0], values=items)
+    else:
+        combo.update(value=[], values=[])
+
 def main():
     '''Main function of the program'''
 
@@ -47,21 +54,19 @@ def main():
             event, values = sg.Window('Choisir un mot de passe', layouts.security).read(close=True)
             if event == 'OK':
                 pass
-
-        elif event in ('-BORNPLACE-', '-DEATHPLACE-', '-MARRIAGEPLACE-'):
+        
+        # When the user write a place, search for autocompletion
+        elif event in ('-BIRTHPLACE-', '-DEATHPLACE-', '-MARRIAGEPLACE-'):
             place_list = geneanet.place_autocompletion(values[event])
-            if place_list != []:
-                window[f'-COMBO{event[1:-1]}-'].update(value=place_list[0], values=place_list[0:])
-            else:
-                window[f'-COMBO{event[1:-1]}-'].update(value=[], values=[])
+            update_combo(window[f'-COMBO{event[1:-1]}-'], place_list)
+        # When an option in a COMBO is selected, update the corresponding field
         elif event in ('-COMBOPARENT-', '-COMBOBORNPLACE-', '-COMBODEATHPLACE-', '-COMBOMARRIAGEPLACE-', '-COMBOPARTNER-'):
             window[f'-{event[6:]}'].update(value=values[event])
+        # When the user write a person, search for autocompletion in the family tree
         elif event in ('-PARTNER-', '-PARENT-'):
             partner_list = geneanet.person_autocompletion(values[event])
-            if partner_list != []:
-                window[f'-COMBO{event[1:-1]}-'].update(value=partner_list[0], values=partner_list[0:])
-            else:
-                window[f'-COMBO{event[1:-1]}-'].update(value=[], values=[])
+            update_combo(window[f'-COMBO{event[1:-1]}-'], partner_list)
+        # When the user click on the add button, add the person to the family tree
         elif event == '-ADD-':
             geneanet.add_person(values)
 
