@@ -32,7 +32,7 @@ menu_def = [['&Paramètres', ['&Thèmes', '&Sécurité', '&Quitter le programme'
 add_people = [
     title('Ajouter une personne à l\'arbre'),
     [
-        sg.Combo(['Père de', 'Mère de', 'Fils de', 'Fille de'], 'Père de', key='-TYPEPARENT-', size=(10,1)), 
+        sg.Combo(['Père de', 'Mère de', 'Époux de', 'Épouse de'], 'Père de', key='-TYPEPARENT-', size=(10,1)), 
         sg.InputText(key='-PARENT-', size=(30,1), enable_events=True), sg.Combo([], key='-COMBOPARENT-', size=(30,1), enable_events=True)
     ],
     inputText('Prénom', 'FIRSTNAME'),

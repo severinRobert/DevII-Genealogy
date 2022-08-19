@@ -1,5 +1,6 @@
 '''This module starts and runs the program'''
 
+from unittest.result import failfast
 import PySimpleGUI as sg
 from geneanet import Geneanet
 from familysearch import FamilySearch
@@ -71,6 +72,7 @@ def main():
         # When the user click on the add button, add the person to the family tree
         elif event == '-ADD-':
             geneanet.add_person(values)
+            sg.SystemTray.notify(*familysearch.add_person(values))
 
     window.close()
 
